@@ -4,7 +4,7 @@
 const CONFIG = {
 
   MODEL_NAME: 'gemini-3-flash-preview', 
-  API_KEY: 'AIzaSyDJNRZdroXPzBft47gln7Bk99GEUR5Ahrc', // 替换你的 Key
+  API_KEY: '', // 替换你的 Key
   
   SOURCE_LABEL: 'PolyU',
   PROCESSED_LABEL: 'PolyU/Processed', // 确保 Gmail 里真的有这个子标签，或者只用 '[Processed]'
@@ -145,4 +145,5 @@ function createCalendarEvent(data) {
     
     cal.createEvent(`[Outlook] ${data.title}`, start, end, {description: desc, location: data.location});
   }
+
 }
