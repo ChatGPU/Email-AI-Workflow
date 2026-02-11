@@ -189,6 +189,32 @@ const V4_CACHE = {
 // ============================================================
 // 初始化 / Key / Trigger
 // ============================================================
+// Public entrypoints (without trailing underscore) are exposed for Apps Script
+// runner/trigger discovery. Internal logic stays in *_ helper functions.
+function V4_setGeminiApiKey(apiKey) {
+  return V4_setGeminiApiKey_(apiKey);
+}
+
+function V4_setupSmartEmailProcessor() {
+  return V4_setupSmartEmailProcessor_();
+}
+
+function V4_processEmails() {
+  return V4_processEmails_();
+}
+
+function V4_sendDailyReport() {
+  return V4_sendDailyReport_();
+}
+
+function V4_testProcessOne() {
+  return V4_testProcessOne_();
+}
+
+function V4_resetProcessorState() {
+  return V4_resetProcessorState_();
+}
+
 function V4_setGeminiApiKey_(apiKey) {
   const key = String(apiKey || '').trim();
   if (key.length < 20) throw new Error('apiKey 为空或太短');
@@ -207,10 +233,10 @@ function V4_setupTriggers_() {
   const triggers = ScriptApp.getProjectTriggers();
   for (const t of triggers) ScriptApp.deleteTrigger(t);
 
-  ScriptApp.newTrigger('V4_processEmails_').timeBased().everyMinutes(5).create();
+  ScriptApp.newTrigger('V4_processEmails').timeBased().everyMinutes(5).create();
 
   if (V4_CONFIG.DAILY_REPORT.ENABLED) {
-    ScriptApp.newTrigger('V4_sendDailyReport_')
+    ScriptApp.newTrigger('V4_sendDailyReport')
       .timeBased()
       .atHour(V4_CONFIG.DAILY_REPORT.HOUR)
       .everyDays(1)
@@ -1884,5 +1910,32 @@ function V4_resetProcessorState_() {
     if (k.startsWith('V4_thread:') && k.endsWith(':lastMessageId')) props.deleteProperty(k);
   }
   Logger.log('✅ V4 已清空 thread:*:lastMessageId 状态');
+}
+
+// ============================================================
+// Apps Script 可见入口（不带下划线，才会出现在 Run 下拉菜单）
+// ============================================================
+function V4_setGeminiApiKey(apiKey) {
+  return V4_setGeminiApiKey_(apiKey);
+}
+
+function V4_setupSmartEmailProcessor() {
+  return V4_setupSmartEmailProcessor_();
+}
+
+function V4_processEmails() {
+  return V4_processEmails_();
+}
+
+function V4_sendDailyReport() {
+  return V4_sendDailyReport_();
+}
+
+function V4_testProcessOne() {
+  return V4_testProcessOne_();
+}
+
+function V4_resetProcessorState() {
+  return V4_resetProcessorState_();
 }
 

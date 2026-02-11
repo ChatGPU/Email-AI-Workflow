@@ -46,7 +46,7 @@ V4 的核心改动：
 
 在 Apps Script 里运行一次：
 
-- `V4_setGeminiApiKey_("YOUR_API_KEY")`
+- `V4_setGeminiApiKey("YOUR_API_KEY")`
 
 （推荐写入 Script Properties，避免把 Key 写进代码）
 
@@ -62,20 +62,20 @@ V4 的核心改动：
 
 运行一次：
 
-- `V4_setupSmartEmailProcessor_()`
+- `V4_setupSmartEmailProcessor()`
 
 这会：
 
 - 创建 Gmail 标签体系（`AI/...`）
 - 创建日志表：`SmartEmailProcessor Log V4`
-- 创建触发器：每 5 分钟运行 `V4_processEmails_()`，每天 22 点运行 `V4_sendDailyReport_()`（可在配置里关闭）
+- 创建触发器：每 5 分钟运行 `V4_processEmails()`，每天 22 点运行 `V4_sendDailyReport()`（可在配置里关闭）
 
 ---
 
 ### 日常使用
 
 - 正常情况下你不需要手动运行，触发器会自动跑
-- 想立刻测试一次：运行 `V4_testProcessOne_()`
+- 想立刻测试一次：运行 `V4_testProcessOne()`
 
 ---
 
@@ -93,4 +93,4 @@ V4 的核心改动：
 
 - **没有启用 Tasks API**：V4 会跳过 Tasks 写入（Log 会记录 `SKIP_TASKS_NOT_ENABLED`）
 - **处理失败**：线程会被打上 `AI/❌ 处理失败` 与 `AI/⚠️ 待复核`
-- **重置幂等状态（谨慎）**：运行 `V4_resetProcessorState_()`，会让旧线程可能被重新处理
+- **重置幂等状态（谨慎）**：运行 `V4_resetProcessorState()`，会让旧线程可能被重新处理
