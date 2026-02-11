@@ -5,8 +5,8 @@
  * ===========================
  * ✅ 新手只需要改这里（SECTION A）
  * ===========================
- * 1) 先运行：V4_setGeminiApiKey_("你的Key")
- * 2) 再运行：V4_setupSmartEmailProcessor_()
+ * 1) 先运行：V4_setGeminiApiKey_('你的Key')
+ * 2) 再运行：V4_setupSmartEmailProcessor()
  * 3) 给你的 Outlook 转发到 Gmail 的邮件打上 Gmail 标签：CONFIG.GMAIL.SOURCE_LABEL（默认 PolyU）
  * 4) 之后触发器会每 5 分钟处理 1 个线程（1 封“最新邮件”），一次可生成多个日历/待办
  *
@@ -196,6 +196,32 @@ function V4_setGeminiApiKey_(apiKey) {
   Logger.log('✅ 已保存 V4_GEMINI_API_KEY 到 Script Properties');
 }
 
+// Apps Script 运行菜单只会显示“公开入口函数”（不以下划线结尾）。
+// 这些 wrapper 让 V4 在编辑器里可直接选择并运行。
+function V4_setGeminiApiKey() {
+  throw new Error("请在编辑器中手动执行：V4_setGeminiApiKey_('YOUR_API_KEY')");
+}
+
+function V4_setupSmartEmailProcessor() {
+  V4_setupSmartEmailProcessor_();
+}
+
+function V4_processEmails() {
+  V4_processEmails_();
+}
+
+function V4_sendDailyReport() {
+  V4_sendDailyReport_();
+}
+
+function V4_testProcessOne() {
+  V4_testProcessOne_();
+}
+
+function V4_resetProcessorState() {
+  V4_resetProcessorState_();
+}
+
 function V4_setupSmartEmailProcessor_() {
   V4_ensureLabelsExist_();
   V4_ensureLogSheet_();
@@ -207,10 +233,10 @@ function V4_setupTriggers_() {
   const triggers = ScriptApp.getProjectTriggers();
   for (const t of triggers) ScriptApp.deleteTrigger(t);
 
-  ScriptApp.newTrigger('V4_processEmails_').timeBased().everyMinutes(5).create();
+  ScriptApp.newTrigger('V4_processEmails').timeBased().everyMinutes(5).create();
 
   if (V4_CONFIG.DAILY_REPORT.ENABLED) {
-    ScriptApp.newTrigger('V4_sendDailyReport_')
+    ScriptApp.newTrigger('V4_sendDailyReport')
       .timeBased()
       .atHour(V4_CONFIG.DAILY_REPORT.HOUR)
       .everyDays(1)
@@ -1885,4 +1911,3 @@ function V4_resetProcessorState_() {
   }
   Logger.log('✅ V4 已清空 thread:*:lastMessageId 状态');
 }
-
