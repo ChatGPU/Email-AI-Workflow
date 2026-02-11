@@ -5,9 +5,9 @@
  * ===========================
  * ✅ 新手只需要改这里（SECTION A）
  * ===========================
- * 1) 先运行：V4_setGeminiApiKey_("你的Key")
- * 2) 再运行：V4_setupSmartEmailProcessor_()
- * 3) 给你的 Outlook 转发到 Gmail 的邮件打上 Gmail 标签：CONFIG.GMAIL.SOURCE_LABEL（默认 PolyU）
+ * 1) 先运行：V4_setGeminiApiKey("你的Key")
+ * 2) 再运行：V4_setupSmartEmailProcessor()
+ * 3) 给你的 Outlook 转发到 Gmail 的邮件打上 Gmail 标签：V4_CONFIG.GMAIL.SOURCE_LABEL（默认 PolyU）
  * 4) 之后触发器会每 5 分钟处理 1 个线程（1 封“最新邮件”），一次可生成多个日历/待办
  *
  * 重要说明（关于“去除上限”）：
