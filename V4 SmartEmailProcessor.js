@@ -5,8 +5,8 @@
  * ===========================
  * ✅ 新手只需要改这里（SECTION A）
  * ===========================
- * 1) 先运行：V4_setGeminiApiKey_('你的Key')
- * 2) 再运行：V4_setupSmartEmailProcessor()
+ * 1) 先运行：V4_setGeminiApiKey_("你的Key")
+ * 2) 再运行：V4_setupSmartEmailProcessor_()
  * 3) 给你的 Outlook 转发到 Gmail 的邮件打上 Gmail 标签：CONFIG.GMAIL.SOURCE_LABEL（默认 PolyU）
  * 4) 之后触发器会每 5 分钟处理 1 个线程（1 封“最新邮件”），一次可生成多个日历/待办
  *
@@ -189,37 +189,37 @@ const V4_CACHE = {
 // ============================================================
 // 初始化 / Key / Trigger
 // ============================================================
+// Public entrypoints (without trailing underscore) are exposed for Apps Script
+// runner/trigger discovery. Internal logic stays in *_ helper functions.
+function V4_setGeminiApiKey(apiKey) {
+  return V4_setGeminiApiKey_(apiKey);
+}
+
+function V4_setupSmartEmailProcessor() {
+  return V4_setupSmartEmailProcessor_();
+}
+
+function V4_processEmails() {
+  return V4_processEmails_();
+}
+
+function V4_sendDailyReport() {
+  return V4_sendDailyReport_();
+}
+
+function V4_testProcessOne() {
+  return V4_testProcessOne_();
+}
+
+function V4_resetProcessorState() {
+  return V4_resetProcessorState_();
+}
+
 function V4_setGeminiApiKey_(apiKey) {
   const key = String(apiKey || '').trim();
   if (key.length < 20) throw new Error('apiKey 为空或太短');
   PropertiesService.getScriptProperties().setProperty('V4_GEMINI_API_KEY', key);
   Logger.log('✅ 已保存 V4_GEMINI_API_KEY 到 Script Properties');
-}
-
-// Apps Script 运行菜单只会显示“公开入口函数”（不以下划线结尾）。
-// 这些 wrapper 让 V4 在编辑器里可直接选择并运行。
-function V4_setGeminiApiKey() {
-  throw new Error("请在编辑器中手动执行：V4_setGeminiApiKey_('YOUR_API_KEY')");
-}
-
-function V4_setupSmartEmailProcessor() {
-  V4_setupSmartEmailProcessor_();
-}
-
-function V4_processEmails() {
-  V4_processEmails_();
-}
-
-function V4_sendDailyReport() {
-  V4_sendDailyReport_();
-}
-
-function V4_testProcessOne() {
-  V4_testProcessOne_();
-}
-
-function V4_resetProcessorState() {
-  V4_resetProcessorState_();
 }
 
 function V4_setupSmartEmailProcessor_() {
@@ -1911,3 +1911,31 @@ function V4_resetProcessorState_() {
   }
   Logger.log('✅ V4 已清空 thread:*:lastMessageId 状态');
 }
+
+// ============================================================
+// Apps Script 可见入口（不带下划线，才会出现在 Run 下拉菜单）
+// ============================================================
+function V4_setGeminiApiKey(apiKey) {
+  return V4_setGeminiApiKey_(apiKey);
+}
+
+function V4_setupSmartEmailProcessor() {
+  return V4_setupSmartEmailProcessor_();
+}
+
+function V4_processEmails() {
+  return V4_processEmails_();
+}
+
+function V4_sendDailyReport() {
+  return V4_sendDailyReport_();
+}
+
+function V4_testProcessOne() {
+  return V4_testProcessOne_();
+}
+
+function V4_resetProcessorState() {
+  return V4_resetProcessorState_();
+}
+

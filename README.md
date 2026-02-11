@@ -46,7 +46,7 @@ V4 的核心改动：
 
 在 Apps Script 里运行一次：
 
-- `V4_setGeminiApiKey_("YOUR_API_KEY")`
+- `V4_setGeminiApiKey("YOUR_API_KEY")`
 
 （推荐写入 Script Properties，避免把 Key 写进代码）
 
